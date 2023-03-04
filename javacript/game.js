@@ -2,7 +2,7 @@ class Player {
   constructor() {
     this.positionX = 15;
     this.positionY = 32;
-    this.width = 5;
+    this.width = 2;
     this.height = 5;
     this.domElement=null
 
@@ -41,34 +41,109 @@ class Player {
     this.domElement.style.bottom=this.positionY + "vh"
     console.log("position...", this.positionY);
   }
-  moveDiagonalUpRight(){
+// //   moveDiagonalUpRight(){
+// //     this.positionX++;
+// //     this.positionY++
+// //     this.domElement.style.left=this.positionX + "vw"
+// //     this.domElement.style.bottom=this.positionY + "vh"
+    
+// //   }
 
 
-  }
 }
+
+class Rats{
+    constructor(){
+        this.width= 3
+        this.height=3
+        this.positionX= 0//max95
+        this.positionY= 0
+
+        this.domElement=null
+        this.createDomElement()
+    }
+    createDomElement() {
+        this.domElement = document.createElement("div");
+     
+         this.domElement.className = "rats";
+         this.domElement.style.width = this.width + "vw";
+         this.domElement.style.height = this.height + "vh";
+        
+         
+     
+         const mapElm = document.getElementById("map");
+         mapElm.appendChild(this.domElement);
+       }
+       moveDown(){
+         this.positionY--
+         this.domElement.style.bottom = this.positionY + "vh";
+       }
+
+
+////////////////
+       follow(player) {
+        const distanceX = player.positionX - this.positionX;
+        const distanceY= player.positionY - this.positionY;
+        const dist = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+       this.speed = 0.5;//////Need to change over time or score????
+        const vx = (distanceX / dist) * this.speed;
+        const vy = (distanceY / dist) * this.speed;
+        this.positionX += vx;
+        this.positionY += vy;
+
+        this.domElement.style.left = this.positionX + "vw";
+        this.domElement.style.bottom = this.positionY + "vh";
+    }
+
+    randomSpawn(){
+        
+        
+    }
+}
+
+
+
 const player = new Player();
 
-document.addEventListener("keydown", function (e) {
-  ///// Movement keys
-  if (e.key === "ArrowRight") {
+const ratArray=[]
+
+
+
+///// Movement keys
+
+document.addEventListener("keydown",  (e) => {
+  if(e.key === "ArrowRight") {
     player.moveRight();
-  } else if (e.key === "ArrowLeft") {
+
+  }
+    if (e.key === "ArrowLeft") {
     player.moveLeft();
-  } else if (e.key === "ArrowUp") {
+  }  
+  if (e.key === "ArrowUp") {
     player.moveUp();
-  } else if (e.key === "ArrowDown") {
+  } 
+   if (e.key === "ArrowDown") {
     player.moveDown();
   }
-  /////////// Diagonal movement keys Trys////////git
-  if (e.key === "ArrowUp" && e.key === "ArrowRight") {
-  player.moveUp() + player.moveRight(); }
-
-  if (e.key=== "ArrowUp" && e.key ==="ArrowLeft"){
-    player.moveUp;
-    player.moveLeft;
-  } 
-
+  
+  
+  //////////diagonal move
+  ////if (e.key === "ArrowUp" && e.key==="ArrowRight" ){}
 });
 
 
 
+///create rats
+setInterval(()=>{
+   const newRat = new Rats()
+    ratArray.push(newRat)
+},3000)
+
+//move rats
+setInterval(() => {
+      
+    ratArray.forEach((ratInstance)=> {
+    ratInstance.follow(player);
+})
+   
+},200)

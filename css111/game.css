@@ -2,16 +2,25 @@ body {
     margin: 0;
     padding: 0;
     background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 #map {
     background-color:white;
 
-    height:75vh;
-    width: 75vh;
+    height:90vh;
+    width: 100vh;
     position: relative;
 }
 #player {
     background-color: rgb(255, 0, 166);
     position: absolute;
     bottom: 0;
+}
+
+.rats{
+    position: absolute;
+    background-color: brown;
 }
