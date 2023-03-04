@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+#map {
+    background-color:white;
+
+    height:75vh;
+    width: 75vh;
+    position: relative;
+}
+#player {
+    background-color: rgb(255, 0, 166);
+    position: absolute;
+    bottom: 0;
+}
