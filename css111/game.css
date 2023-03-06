@@ -9,12 +9,13 @@ body {
     background-size: contain;
 }
 #map {
+
     background-image:url("../images/floor3.jpg");
     background-size: cover;
-   
+   border: solid,5px, black;
     height:90vh;
     width: 130vh;
-    position: relative;
+    position:relative
 }
 #player {
     background-color: rgb(255, 0, 166);
@@ -29,13 +30,13 @@ body {
 }
 
 
-#trap1{
+#traps{
     background-image:url("../images/trap.gif") ; 
      background-size: cover; 
     position: absolute;
     background-position-x:center ;
 }
-#trap2{
+/* #trap2{
     background-image:url("../images/trap.gif") ; 
     background-size: cover;
     position: absolute;
@@ -55,5 +56,5 @@ body {
     position: absolute;
     background-position-x:center ;
 }
-
+ */
 
