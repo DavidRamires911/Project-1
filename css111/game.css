@@ -6,10 +6,10 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-size: contain;
+    background-size:contain
 }
 #map {
-
+ 
     background-image:url("../images/floor3.jpg");
     background-size: cover;
    border: solid,5px, black;
@@ -36,6 +36,20 @@ body {
     position: absolute;
     background-position-x:center ;
 }
+
+
+#health{
+    display: flex;
+    align-items:baseline ;
+}
+
+
+
+
+
+
+
+
 /* #trap2{
     background-image:url("../images/trap.gif") ; 
     background-size: cover;
