@@ -24,7 +24,6 @@
 //   map.style.display="block";
 //   gameOver.style.display="none";
 
-  
 // }
 // function gameOver(){ let start=document.getElementById("start");
 // let map= document.getElementById("map");
@@ -40,11 +39,11 @@ class Player {
     this.width = 2;
     this.height = 5;
     this.health = 7;
+    this.intervalId = null;
 
     this.domElement = null;
 
     this.createDomElement();
-    
   }
   createDomElement() {
     this.domElement = document.createElement("div");
@@ -87,8 +86,10 @@ class Player {
 
   // //   }
 }
-
+let score=0
 class Rats {
+
+  
   constructor() {
     this.width = 4;
     this.height = 7;
@@ -98,11 +99,9 @@ class Rats {
 
     this.domElement = null;
     this.createDomElement();
-    this.checkForCollisions()
-    
+    this.checkForCollisions();
 
-      this.randomSpawn();
-    
+    this.randomSpawn();
   }
   createDomElement() {
     this.ratElement = document.createElement("div");
@@ -110,7 +109,6 @@ class Rats {
     this.ratElement.className = "rats";
     this.ratElement.style.width = this.width + "vw";
     this.ratElement.style.height = this.height + "vh";
-    
 
     const mapElm = document.getElementById("map");
     mapElm.appendChild(this.ratElement);
@@ -139,37 +137,46 @@ class Rats {
 
   /////////////////////Work in progress spawn inside the map, add with this.positionY + vw this.positionX + vh
   randomSpawn() {
-    const mapWidth = 80;
+    const mapWidth = 60;
     const mapHeight = 90;
 
-    this.positionX= Math.floor(Math.random() * (mapWidth + 1));
-    this.positionY= Math.floor(Math.random() * (mapHeight + 1));
+    this.positionX = Math.floor(Math.random() * (mapWidth + 1));
+    this.positionY = Math.floor(Math.random() * (mapHeight + 1));
 
     // update the position of the rat's DOM element
     this.ratElement.style.left = this.positionX + "vw";
     this.ratElement.style.bottom = this.positionY + "vh";
+  }
+
+  checkForCollisions() {
+    const scoreDiv = document.getElementById("score");
+    
+    
+    trapArray.forEach((trap) => {
+      ratArray.forEach((rat, index) => {
+        if (
+          trap.positionX + trap.width > rat.positionX &&
+          trap.positionX < rat.positionX + rat.width &&
+          trap.positionY + trap.height > rat.positionY &&
+          trap.positionY < rat.positionY + rat.height
+        ) {
+          
+          ratArray.splice(index, 1);
+          rat.ratElement.remove();
+          console.log("Hi");
+
+          score += 2;
+          
+          scoreDiv.textContent = "Score: " + score;
+          
+        }
+      });
+    });
     
   }
-  checkForCollisions() {
-    trapArray.forEach(trap => {
-      ratArray.forEach((rat,index) => {
-        if (trap.positionX + trap.width > rat.positionX && 
-          trap.positionX < rat.positionX + rat.width && 
-          trap.positionY + trap.height > rat.positionY && 
-          trap.positionY< rat.positionY+rat.height ) 
-          {
-            
-            ratArray.splice(index, 1)
-            rat.ratElement.remove()
-            console.log("Hi");
-        }
-      })
-        
-    })
-   
-    }
-          
 }
+
+
 class Traps {
   constructor(positionX, positionY) {
     this.width = 4;
@@ -192,6 +199,7 @@ class Traps {
     mapElm.appendChild(this.domElement);
   }
 }
+
 
 const player = new Player();
 
@@ -232,7 +240,8 @@ setInterval(() => {
 let health = 7;
 
 //move rats
-setInterval((intervalId) => {
+setInterval(() => {
+  const healthDiv = document.getElementById("health")
   ratArray.forEach((ratInstance) => {
     this.ratInstance = ratInstance;
     this.ratInstance.follow(player);
@@ -250,11 +259,15 @@ setInterval((intervalId) => {
       ratInstance.ratElement.remove();
       console.log("collision");
       health--;
-      if (health<= 0) {
+      healthDiv.textContent = "Health: " + health;
+      
+      if (health <= 0) {
         console.log("game over");
-        clearInterval(intervalId);
-        
+        //window.location.href = "./gameover.html";
+        clearInterval(this.intervalId);
       }
     }
   });
 }, 200);
+
+this.intervalId = setInterval;

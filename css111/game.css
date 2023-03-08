@@ -1,47 +1,122 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-image:url("../images/background.png");
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-size:contain;
-    pointer-events:none;
+  margin: 0;
+  padding: 0;
+  background-image: url("../images/background.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: contain;
 }
 #map {
- 
-    background-image:url("../images/floor3.jpg");
-    background-size: cover;
-   border: solid,5px, black;
-    height:90vh;
-    width:130vh;
-    position:relative;
-    pointer-events:none;
+  background-image: url("../images/floor3.jpg");
+  background-size: cover;
+  border: solid, 5px, black;
+  height: 90vh;
+  width: 60vw;
+  position: relative;
+  pointer-events: none;
 }
 #player {
-    background-color: rgb(255, 0, 166);
-    position: absolute;
-    bottom: 0;
+  background-color: rgb(255, 0, 166);
+  position: absolute;
+  bottom: 0;
 }
 
-.rats{
-    position: absolute;
-    background-image:url("../images/rat.gif") ; 
-    background-size: cover;/*resize to cover the container */
+.rats {
+  position: absolute;
+  background-image: url("../images/rat.gif");
+  background-size: cover; /*resize to cover the container */
 }
 
-
-#traps{
-    background-image:url("../images/trap.gif") ; 
-     background-size: cover; 
-    position: absolute;
-    background-position-x:center ;
+#traps {
+  background-image: url("../images/trap.gif");
+  background-size: cover;
+  position: absolute;
+  background-position-x: center;
 }
 
+#health {
+  display: flex;
+  align-items: baseline;
+}
+
+#gameover {
+  margin: 0;
+  padding: 0;
+  background-image: url("../images/background.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: contain;
+  flex-direction: column;
+  color: aliceblue;
+}
+a {
+  text-decoration: none;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  will-change: box-shadow, transform;
+  background: radial-gradient(100% 100% at 100% 0%, #6b604a 0%, #fffc54a0 75%);
+  box-shadow: 0px 2px 4px rgba(92, 86, 10, 0.771),
+    0px 7px 13px -3px rgb(45 35 66 / 30%),
+    inset 0px -3px 0px rgba(104, 111, 58, 0.5);
+  padding: 0 34px;
+  border-radius: 6px;
+  color: #fff;
+  height: 48px;
+  font-size: 18px;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  font-family: "Black Ops One", cursive;
+}
+
+h1 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 60px;
+  font-family: "Black Ops One", cursive;
+  line-height: 120px;
+  text-align: center;
+  text-shadow: 5px 5px #fffc54a0;
+  color: #ffffff;
+}
+
+#score {
+    font-size: 8px;
+    font-weight: bold;
+    color: white;
+    font-family: "Black Ops One", cursive
+  }
 
 #health{
-    display: flex;
-    align-items:baseline ;
+    font-size: 8px;
+    font-weight: bold;
+    color: white;
+    font-family: "Black Ops One", cursive
+
 }
 
+#scoreBoard{
+    display: flex;
+border: solid 3px #615f03a0 ;
+flex-direction: column;
+width: 50px;
+height: 65px;
+text-align: center;
+align-items: center;
+justify-content: space-around;
+position: relative;
+border-radius: 10px;
+background: radial-gradient(100% 100% at 100% 0%, #4d3f24 0%, #898708a0 75%);
+right: 25px;
+bottom: 70px;
+padding-right: 10px;
+
+}
