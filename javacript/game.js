@@ -16,6 +16,23 @@
 //     gameover.style.display="none"
 //     start()
 
+// function starGame(){
+//   let start=document.getElementById("start");
+//   let map= document.getElementById("map");
+//   let gameOver= document.getElementById("game-over");
+//   start.style.display="none";
+//   map.style.display="block";
+//   gameOver.style.display="none";
+
+  
+// }
+// function gameOver(){ let start=document.getElementById("start");
+// let map= document.getElementById("map");
+// let gameOver= document.getElementById("game-over");
+// start.style.display="none";
+// map.style.display="none";
+// gameOver.style.display="block";}
+
 class Player {
   constructor() {
     this.positionX = 23;
@@ -27,6 +44,7 @@ class Player {
     this.domElement = null;
 
     this.createDomElement();
+    
   }
   createDomElement() {
     this.domElement = document.createElement("div");
@@ -121,7 +139,7 @@ class Rats {
 
   /////////////////////Work in progress spawn inside the map, add with this.positionY + vw this.positionX + vh
   randomSpawn() {
-    const mapWidth = 130;
+    const mapWidth = 80;
     const mapHeight = 90;
 
     this.positionX= Math.floor(Math.random() * (mapWidth + 1));
@@ -214,7 +232,7 @@ setInterval(() => {
 let health = 7;
 
 //move rats
-setInterval(() => {
+setInterval((intervalId) => {
   ratArray.forEach((ratInstance) => {
     this.ratInstance = ratInstance;
     this.ratInstance.follow(player);
@@ -235,6 +253,7 @@ setInterval(() => {
       if (health<= 0) {
         console.log("game over");
         clearInterval(intervalId);
+        
       }
     }
   });
