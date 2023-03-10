@@ -294,7 +294,7 @@ setInterval(() => {
       healthDiv.textContent = "Health: " + health;
       if (health <= 0) {
         console.log("game over");
-        //window.location.href = "./gameover.html";
+        window.location.href = "./gameover.html";
       }
     }
   });
