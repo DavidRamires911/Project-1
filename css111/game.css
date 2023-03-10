@@ -7,8 +7,10 @@ body {
   align-items: center;
   height: 100vh;
   background-size: contain;
+  
 }
 #map {
+  display: none;
   background-image: url("../images/floor3.jpg");
   background-size: cover;
   border: solid, 5px, black;
@@ -16,11 +18,13 @@ body {
   width: 60vw;
   position: relative;
   pointer-events: none;
+ 
 }
 #player {
-  background-color: rgb(255, 0, 166);
+  background-image: url("../images/cheese.gif");
   position: absolute;
   bottom: 0;
+  background-size: cover;
 }
 
 .rats {
@@ -104,14 +108,13 @@ h1 {
 }
 
 #scoreBoard{
-    display: flex;
+  display: none ;
+
 border: solid 3px #615f03a0 ;
-flex-direction: column;
-width: 50px;
-height: 65px;
-text-align: center;
-align-items: center;
-justify-content: space-around;
+
+width: 60px;
+height: 25px;
+text-align:center;
 position: relative;
 border-radius: 10px;
 background: radial-gradient(100% 100% at 100% 0%, #4d3f24 0%, #898708a0 75%);
@@ -119,4 +122,10 @@ right: 25px;
 bottom: 70px;
 padding-right: 10px;
 
+}
+
+#health{
+  text-align:  center;
+  padding-left: 12px;
+  padding-bottom: 3px;
 }

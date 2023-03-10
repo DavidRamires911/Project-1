@@ -6,54 +6,33 @@
   -Set timout for traps (cooldown)
   -Bigger rat that can hit 2 traps 
   -Sound, random rat sound and dips                            */
-// function starGame(){
 
-//     let start=document.getElementById("start")
-//     let board = document.getElementById("map")
-//     let gameover= document.getElementById("game-over")
-//     start.style.display="none";
-//     board.style.display= "block"
-//     gameover.style.display="none"
-//     start()
-
-// function starGame(){
-//   let start=document.getElementById("start");
-//   let map= document.getElementById("map");
-//   let gameOver= document.getElementById("game-over");
-//   start.style.display="none";
-//   map.style.display="block";
-//   gameOver.style.display="none";
-
-// }
-// function gameOver(){ let start=document.getElementById("start");
-// let map= document.getElementById("map");
-// let gameOver= document.getElementById("game-over");
-// start.style.display="none";
-// map.style.display="none";
-// gameOver.style.display="block";}
-
-
-
-let score=0
+let score = 0;
 let health = 7;
-
-
-class Game{
-  constructor(){
+var lifeAudio=new Audio("/audio/live.mp3")
+var deadRatAudio=new Audio("/audio/dead rat.mp3")
+class Game {
+  constructor() {
     this.keysDown = {};
-    this.attachEventListeners()
-    this.movePlayer()
+    this.attachEventListeners();
+    this.movePlayer();
+  }
+  startGame() {
+    // hide the start page and show the game canvas
+    document.getElementById("start-page").style.display = "none";
+    document.getElementById("map").style.display = "block";
+    document.getElementById("scoreBoard").style.display = "block";
+
+    // TODO: write your game code here
   }
   attachEventListeners() {
     //Player movement with arrow keys
     document.addEventListener("keydown", (event) => {
       this.keysDown[event.code] = true;
-});
+    });
     document.addEventListener("keyup", (event) => {
       this.keysDown[event.code] = false;
-      
     });
-    
   }
 
   movePlayer() {
@@ -78,78 +57,83 @@ class Player {
   constructor() {
     this.positionX = 23;
     this.positionY = 43;
-    this.width = 2;
+    this.width = 3;
     this.height = 5;
     this.health = 7;
     this.intervalId = null;
-    this.playerSpeed = .2
+    this.playerSpeed = 0.2;
     this.domElement = null;
-    this.minX=0
-    this.maxX=60
-    this.minY=0;
-    this.maxY=90
+    this.minX = 0;
+    this.maxX = 60;
+    this.minY = 0;
+    this.maxY = 90;
     this.createDomElement();
-    
   }
+
+  update() {
+    setInterval(() => {
+      
+         this.playerSpeed += 0.1
+      
+         console.log(this.playerSpeed);
+      }, 80*1000);
+    }
+
   createDomElement() {
     this.domElement = document.createElement("div");
-    
+
     this.domElement.id = "player";
     this.domElement.style.width = this.width + "vw";
     this.domElement.style.height = this.height + "vh";
     this.domElement.style.bottom = this.positionY + "vh";
     this.domElement.style.left = this.positionX + "vw";
-    
+
     const mapElm = document.getElementById("map");
     mapElm.appendChild(this.domElement);
   }
 
-  
   moveLeft() {
-    if (this.positionX>0){ 
-    this.positionX -= this.playerSpeed;
-    this.domElement.style.left = this.positionX + "vw"; }
-    //console.log("position...", this.positionX);
+    if (this.positionX > 0) {
+      this.positionX -= this.playerSpeed;
+      this.domElement.style.left = this.positionX + "vw";
+    }
+   
   }
   moveRight() {
-    if (this.positionX + this.width < this.maxX){   
-    this.positionX += this.playerSpeed
-    this.domElement.style.left = this.positionX + "vw"; }
-    //console.log("position...", this.positionX);
+    if (this.positionX + this.width < this.maxX) {
+      this.positionX += this.playerSpeed;
+      this.domElement.style.left = this.positionX + "vw";
+    }
+    
   }
   moveUp() {
-    if (this.positionY + this.height < this.maxY){ 
-    this.positionY +=this.playerSpeed
-    this.domElement.style.bottom = this.positionY + "vh"; }
-    //console.log("position...", this.positionY);
+    if (this.positionY + this.height < this.maxY) {
+      this.positionY += this.playerSpeed;
+      this.domElement.style.bottom = this.positionY + "vh";
+    }
+    
   }
   moveDown() {
     if (this.positionY > 0) {
-    this.positionY -= this.playerSpeed
-    this.domElement.style.bottom = this.positionY + "vh"; }
-    //console.log("position...", this.positionY);
+      this.positionY -= this.playerSpeed;
+      this.domElement.style.bottom = this.positionY + "vh";
+    }
+    
   }
-  
 }
 
-
-
 class Rats {
-
-  
   constructor() {
     this.width = 4;
     this.height = 7;
     this.positionX = 0; //max95
     this.positionY = 0;
-    
 
     this.domElement = null;
     this.createDomElement();
     this.checkForCollisions();
 
     this.randomSpawn();
-    
   }
   createDomElement() {
     this.ratElement = document.createElement("div");
@@ -181,17 +165,9 @@ class Rats {
 
     this.ratElement.style.left = this.positionX + "vw";
     this.ratElement.style.bottom = this.positionY + "vh";
-   
-    if (score >= 4 && score < 8) {
-      this.speed += 2;
-    } else if (score >= 8) {
-      this.speed += 5;
-    }
-  }
-  
-   
 
-  
+
+  }
 
   /////////////////////Work in progress spawn inside the map, add with this.positionY + vw this.positionX + vh
   randomSpawn() {
@@ -208,8 +184,7 @@ class Rats {
 
   checkForCollisions() {
     const scoreDiv = document.getElementById("score");
-    
-    
+
     trapArray.forEach((trap) => {
       ratArray.forEach((rat, index) => {
         if (
@@ -217,23 +192,20 @@ class Rats {
           trap.positionX < rat.positionX + rat.width &&
           trap.positionY + trap.height > rat.positionY &&
           trap.positionY < rat.positionY + rat.height
-        ) {
-          
-          ratArray.splice(index, 1);
-          rat.ratElement.remove();
-          console.log("Hi");
-
-          score += 2;
-          
-          scoreDiv.textContent = "Score: " + score;
-          
-        }
+          ) {
+            ratArray.splice(index, 1);
+            rat.ratElement.remove();
+            console.log("Hi");
+            
+            score += 1;
+            
+            scoreDiv.textContent = "Score: " + score;
+          }
+         
       });
     });
-    
   }
 }
-
 
 class Traps {
   constructor(positionX, positionY) {
@@ -258,9 +230,12 @@ class Traps {
   }
 }
 
-const game = new Game()
-const player = new Player();
+const game = new Game();
 
+document.getElementById("start-button").addEventListener("click", () => {
+  game.startGame();
+});
+const player = new Player();
 
 const ratArray = [];
 
@@ -270,19 +245,33 @@ const trap3 = new Traps(49, 15);
 const trap4 = new Traps(15, 20);
 const trapArray = [trap1, trap2, trap3, trap4];
 
-
+player.update();
 
 ///create rats
+
+
+
+
+let intervalTime = 3000;
+
 setInterval(() => {
-  const newRat = new Rats();
-  ratArray.push(newRat);
-}, 3000);
+  if (intervalTime > 500) {
+    intervalTime -= 250;
+    console.log('Interval time decreased to', intervalTime);
+  }
+  
+  setInterval(() => {
+    const newRat = new Rats();
+    ratArray.push(newRat);
+    console.log('New rat added!');
+  }, intervalTime);
+}, 45000);
 
 
 
 //move rats
 setInterval(() => {
-  const healthDiv = document.getElementById("health")
+  const healthDiv = document.getElementById("health");
   ratArray.forEach((ratInstance) => {
     this.ratInstance = ratInstance;
     this.ratInstance.follow(player);
@@ -300,14 +289,13 @@ setInterval(() => {
       ratInstance.ratElement.remove();
       console.log("collision");
       health--;
+      lifeAudio.play()
+
       healthDiv.textContent = "Health: " + health;
       if (health <= 0) {
         console.log("game over");
-        window.location.href = "./gameover.html";
-        clearInterval(this.intervalId);
+        //window.location.href = "./gameover.html";
       }
     }
   });
 }, 200);
-
-this.intervalId = setInterval;
