@@ -5,12 +5,25 @@
 /*-Extras Hp for player-7hearts , lose one per rat
   -Set timout for traps (cooldown)
   -Bigger rat that can hit 2 traps 
-  -Sound, random rat sound and dips                            */
+  -Sound, random rat sound and dips 
+  
+  /audio/Sewer Scary Wind - QuickSounds.com.mp3
+  
+  */
+  const sound= new Audio("/audio/Sewer Scary Wind - QuickSounds.com.mp3")
+  sound.volume = 0.5
+  sound.play()
+  const deadRatAudio = new Audio("/audio/dead rat.mp3");
+  const lifeAudio = new Audio("/audio/damage.mp3");
+  lifeAudio.volume= 0.4
+  const gameOverAudio=new Audio("/audio/gameover.mp3")
+  const move= new Audio("/audio/move.mp3")
+  move.volume=0.3
 
 let score = 0;
 let health = 7;
-var lifeAudio=new Audio("/audio/live.mp3")
-var deadRatAudio=new Audio("/audio/dead rat.mp3")
+
+
 class Game {
   constructor() {
     this.keysDown = {};
@@ -72,12 +85,11 @@ class Player {
 
   update() {
     setInterval(() => {
-      
-         this.playerSpeed += 0.1
-      
-         console.log(this.playerSpeed);
-      }, 80*1000);
-    }
+      this.playerSpeed += 0.1;
+
+      console.log(this.playerSpeed);
+    }, 80 * 1000);
+  }
 
   createDomElement() {
     this.domElement = document.createElement("div");
@@ -96,29 +108,29 @@ class Player {
     if (this.positionX > 0) {
       this.positionX -= this.playerSpeed;
       this.domElement.style.left = this.positionX + "vw";
+     
     }
-   
   }
   moveRight() {
     if (this.positionX + this.width < this.maxX) {
       this.positionX += this.playerSpeed;
       this.domElement.style.left = this.positionX + "vw";
+      
     }
-    
   }
   moveUp() {
     if (this.positionY + this.height < this.maxY) {
       this.positionY += this.playerSpeed;
       this.domElement.style.bottom = this.positionY + "vh";
+      
     }
-    
   }
   moveDown() {
     if (this.positionY > 0) {
       this.positionY -= this.playerSpeed;
       this.domElement.style.bottom = this.positionY + "vh";
+     
     }
-    
   }
 }
 
@@ -165,8 +177,6 @@ class Rats {
 
     this.ratElement.style.left = this.positionX + "vw";
     this.ratElement.style.bottom = this.positionY + "vh";
-
-
   }
 
   /////////////////////Work in progress spawn inside the map, add with this.positionY + vw this.positionX + vh
@@ -184,7 +194,7 @@ class Rats {
 
   checkForCollisions() {
     const scoreDiv = document.getElementById("score");
-
+    
     trapArray.forEach((trap) => {
       ratArray.forEach((rat, index) => {
         if (
@@ -192,16 +202,16 @@ class Rats {
           trap.positionX < rat.positionX + rat.width &&
           trap.positionY + trap.height > rat.positionY &&
           trap.positionY < rat.positionY + rat.height
-          ) {
-            ratArray.splice(index, 1);
-            rat.ratElement.remove();
-            console.log("Hi");
-            
-            score += 1;
-            
-            scoreDiv.textContent = "Score: " + score;
-          }
-         
+        ) {
+          ratArray.splice(index, 1);
+          rat.ratElement.remove();
+          console.log("Hi");
+
+          score += 1;
+          deadRatAudio.play()
+
+          scoreDiv.textContent = "Score: " + score;
+        }
       });
     });
   }
@@ -237,6 +247,7 @@ document.getElementById("start-button").addEventListener("click", () => {
 });
 const player = new Player();
 
+player.update();
 const ratArray = [];
 
 const trap1 = new Traps(15, 70);
@@ -245,29 +256,29 @@ const trap3 = new Traps(49, 15);
 const trap4 = new Traps(15, 20);
 const trapArray = [trap1, trap2, trap3, trap4];
 
-player.update();
 
 ///create rats
-
-
-
 
 let intervalTime = 3000;
 
 setInterval(() => {
   if (intervalTime > 500) {
     intervalTime -= 250;
-    console.log('Interval time decreased to', intervalTime);
+    clearInterval(spawnRat)
+    spawnRat = setInterval(() => {
+      const newRat = new Rats();
+      ratArray.push(newRat);
+      
+      console.log("Interval time decreased to", intervalTime);
+    }, intervalTime);
   }
+}, 30000);
+
+let spawnRat = setInterval(() => {
+  const newRat = new Rats();
+  ratArray.push(newRat);
   
-  setInterval(() => {
-    const newRat = new Rats();
-    ratArray.push(newRat);
-    console.log('New rat added!');
-  }, intervalTime);
-}, 45000);
-
-
+}, intervalTime);
 
 //move rats
 setInterval(() => {
@@ -289,11 +300,12 @@ setInterval(() => {
       ratInstance.ratElement.remove();
       console.log("collision");
       health--;
-      lifeAudio.play()
+      lifeAudio.play();
 
       healthDiv.textContent = "Health: " + health;
       if (health <= 0) {
         console.log("game over");
+        
         window.location.href = "./gameover.html";
       }
     }
